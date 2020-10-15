@@ -1,0 +1,23 @@
+- name: Installation
+  items:
+    - name: Docker
+      href: docker-installation.md
+- name: Getting Started
+  href: getting-started.md
+  items:
+    - name: Azure VM
+      href: xref:getting-started-azure
+    - name: Argo Tunnel
+      href: xref:getting-started-argo
+    - name: ACME/letsencrypt
+      href: xref:getting-started-acme
+- name: License Management
+  href: license-management.md
+- name: Database Management
+  href: xref:database-management
+- name: User Management
+  href: xref:user-management
+- name: Deployment Automation
+  href: xref:deployment-automation
+- name: IIS Deployment
+  href: xref:iis-deployment

@@ -1,0 +1,12 @@
+- name: Wayk Bastion
+  href: bastion/toc.yml
+  topicHref: bastion/index.md
+- name: Wayk Client
+  href: client/toc.yml
+  topicHref: client/index.md
+- name: Wayk Agent
+  href: agent/toc.yml
+  topicHref: agent/index.md
+- name: Devolutions Gateway
+  href: gateway/toc.yml
+  topicHref: gateway/index.md

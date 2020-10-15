@@ -1,0 +1,56 @@
+{
+  "build": {
+    "content": [
+      {
+        "files": [
+          "wayk/**.md",
+          "wayk/**/toc.yml",
+          "toc.yml",
+          "*.md"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**",
+          "logos/**",
+          "logo.svg",
+          "favicon.ico"
+        ]
+      }
+    ],
+    "overwrite": [
+      {
+        "exclude": [
+          "obj/**",
+          "_site/**"
+        ]
+      }
+    ],
+    "dest": "_site",
+    "globalMetadataFiles": [],
+    "fileMetadataFiles": [],
+    "template": [
+      "default",
+      "templates/material"
+    ],
+    "globalMetadata": {
+      "_enableSearch": "true",
+      "_appTitle": "docs.devolutions.net",
+      "_appLogoPath": "logo.svg",
+      "_appFooter": "<span>Copyright © Devolutions Inc.",
+      "_disableNavbar": false,
+      "_disableBreadcrumb": false,
+      "_disableToc": false,
+      "_disableAffix": false,
+      "_disableContribution": false
+    },
+    "postProcessors": ["ExtractSearchIndex"],
+    "markdownEngineName": "markdig",
+    "noLangKeyword": false,
+    "keepFileLink": false,
+    "cleanupCacheHistory": false,
+    "disableGitFeatures": true
+  }
+}
