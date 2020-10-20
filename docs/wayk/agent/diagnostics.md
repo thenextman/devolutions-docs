@@ -10,6 +10,8 @@ From the Wayk Agent menu, click *Help* then check "Diagnostic Logging":
 
 ![Wayk Agent Diagnostic Logging](../../images/wayk_agent_diagnostic_logging.png)
 
+Accept the prompt to restart the application, or manually quit and relaunch Wayk Agent.
+
 ## Export Diagnostic Logs
 
 From the Wayk Agent menu, click *Help* then *Export Diagnostics*:
