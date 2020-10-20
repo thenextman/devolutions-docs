@@ -2,6 +2,8 @@
 uid: wayk-bastion-index
 ---
 
+![Image](../../logos/wayk-bastion-color-shadow.svg)
+
 # Wayk Bastion Overview
 
 WaykDen-ps is a PowerShell cmdlet for Wayk Bastion, the centralized server for [Devolutions Wayk Now](https://wayk.devolutions.net). For assistance or feature requests, please use the [Wayk forums](https://forum.devolutions.net/#WaykNow) or open a ticket on this github project.
