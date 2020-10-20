@@ -10,12 +10,6 @@ From the Wayk Agent menu, click *Help* then check "Diagnostic Logging":
 
 ![Wayk Agent Diagnostic Logging](../../images/wayk_agent_diagnostic_logging.png)
 
-For the changes to take effect, the Wayk Agent service needs to be restarted. Open the Windows service manager (Windows Key + R, type 'services.msc', press Enter). From the list of services, right-click "Wayk Now Unattended Service", then select "Restart".
-
-![Wayk Agent Restart Service](../../images/wayk_agent_restart_service.png)
-
-Alternatively, you can run `Restart-Service WaykNowService` from an elevated PowerShell terminal.
-
 ## Export Diagnostic Logs
 
 From the Wayk Agent menu, click *Help* then *Export Diagnostics*:
