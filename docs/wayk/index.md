@@ -19,7 +19,7 @@ Take control without losing it: Wayk Bastion makes remote access to all machines
 * Unattended Remote Desktop Access for All Platforms ✓
 * Centralized Dashboard with Role-Based Access Control ✓
 * Audit Trails for Remote Access Session Tracking ✓
-* Active Directory integration for user management ✓
+* Active Directory Integration for User Management ✓
 
 **Made for Managed Service Providers**
 
@@ -121,6 +121,6 @@ Wayk Agent is installed on all machines managed by Wayk Bastion. The system serv
 
 Wayk Client requires a license to make remote desktop connections to machines managed by Wayk Bastion. Each user is assigned a license individually, such that 10 Wayk Client licenses are needed for 10 technicians. While licenses can be reassigned as needed, they are not considered "floating" or "concurrent" as seen elsewhere.
 
-Wayk Client Enterprise users automatically unlock all advanced features, including unlimited concurrent sessions. Unlimited user licensing is also offered and is the recommended option for a large number of technicians.
+Wayk Client users automatically unlock all advanced features, including unlimited concurrent sessions. For a large number of technicians, unlimited user licensing is the recommended option. As for Wayk Agent, it does not require a license, regardless of the number of machines.
 
-Wayk Client is the only component for which you need a license. Wayk Bastion, Wayk Agent and Devolutions Gateway are all technically free, but they have limited use on their own.
+For more information, [please visit our store](https://store.devolutions.net).
