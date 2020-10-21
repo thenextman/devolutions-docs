@@ -1,3 +1,6 @@
 - name: Wayk
   href: wayk/
   topicHref: wayk/index.md
+- name: Gateway
+  href: gateway/
+  topicHref: gateway/index.md

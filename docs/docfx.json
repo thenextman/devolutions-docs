@@ -5,6 +5,8 @@
         "files": [
           "wayk/**.md",
           "wayk/**/toc.yml",
+          "gateway/**.md",
+          "gateway/**/toc.yml",
           "toc.yml",
           "*.md"
         ]
