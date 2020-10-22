@@ -4,6 +4,9 @@ uid: gateway-deployment
 
 # Relay Deployment
 
+>[!WARNING]
+> This guide is for the old `WaykDen` PowerShell module. Deployments upgraded to the new `WaykBastion` PowerShell module (see the [migration guide](xref:wayk-migration-guide)) should use the new [`DevolutionsGateway` module instead](getting-started.md).
+
 ## Simple Relay Server
 
 This is the default option: it launches a jet relay instance alongside Wayk Bastion, such that you do not need to configure it separately. The -JetServerUrl parameter does not need to be set, as it will automatically be derived from the Wayk Bastion -ExternalUrl parameter. This simplified deployment option is enabled when the -JetExternal parameter is set to false (default):
