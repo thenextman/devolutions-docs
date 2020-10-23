@@ -48,10 +48,10 @@ Set-DGatewayHostname 'jet.buzzword.marketing'
 Before launching Devolutions Gateway for the first time, it is important to configure its protocol listeners with the `Set-DGatewayListeners` command:
 
 ```powershell
-PS > Set-DGatewayListeners @(
->>     $(New-DGatewayListener 'http://*:7171' 'http://*:7171'),
->>     $(New-DGatewayListener 'tcp://*:8181' 'tcp://*:8181')
->> )
+Set-DGatewayListeners @(
+    $(New-DGatewayListener 'http://*:7171' 'http://*:7171'),
+    $(New-DGatewayListener 'tcp://*:8181' 'tcp://*:8181')
+    )
 ```
 
 Run `Get-DGatewayListeners` to see the list of configured listeners:
@@ -120,10 +120,10 @@ Import-DGatewayCertificate -CertificateFile $(Join-Path $CertPath 'fullchain.pfx
 Let's reconfigure our protocol listeners, using 'https' rather than 'http' this time:
 
 ```powershell
-PS > Set-DGatewayListeners @(
-     $(New-DGatewayListener 'https://*:7171' 'https://*:7171'),
-     $(New-DGatewayListener 'tcp://*:8181' 'tcp://*:8181')
-     )
+Set-DGatewayListeners @(
+    $(New-DGatewayListener 'https://*:7171' 'https://*:7171'),
+    $(New-DGatewayListener 'tcp://*:8181' 'tcp://*:8181')
+    )
 ```
 
 the 'tcp' listener remains unchanged for now, but it may use the configured certificate for certain protocols. Do you recall the `Set-DGatewayHostname` command? Let's confirm that the configured hostname matches the imported certificate:
@@ -174,6 +174,27 @@ RawContentLength  : 59
 ```
 
 If the above command worked, then you have successfully configured Devolutions Gateway for external access with a valid certificate, congratulations! If not, review the previous steps to find what you missed.
+
+## Reverse Proxy
+
+Instead of configuring Devolutions Gateway to handle HTTPS with a certificate, a reverse proxy can be put in front to handle and offload TLS entirely. This approach is preferred if multiple web applications need to be exposed through the same entry point. Reverse proxies like [IIS (with ARR)](xref:iis-deployment), traefik, nginx and haproxy also come with advanced configuration options and better ways to handle certificate management.
+
+When using a wildcard certificate, it becomes easy to create an HTTPS listener bound to a specific domain and forward all traffic coming through this domain to Devolutions Gateway specifically. This technique is often used to make "virtual hosts" on the same TCP port (especially 443, the standard one) using TLS Server Name Indication (SNI).
+
+Assuming we have configured our reverse proxy to forward traffic coming in through "https://jet.buzzword.marketing" to our internal host where Devolutions Gateway is listening in HTTP on port 7171, the new configuration should look like this:
+
+```powershell
+Set-DGatewayListeners @(
+    $(New-DGatewayListener 'http://*:7171' 'https://*'),
+    $(New-DGatewayListener 'tcp://*:8181' 'tcp://*:8181')
+    )
+```
+
+Notice that in this case, the internal URL is set to 'http', because it receives traffic in HTTP from the reverse proxy. The reverse proxy handles HTTPS, offloads TLS, then forwards the traffic in HTTP to Devolutions Gateway. Because of this, the network path taken between the reverse proxy and the target host on the local network should be restricted.
+
+You can also choose to offload TLS, yet forward traffic over HTTPS on the internal network with a second TLS connection, but this is definitely not a requirement. This type of configuration is generally more difficult to implement and comes with an additional performance cost. Before going that route, consider *not* doing TLS offloading in the first place, and letting Devolutions Gateway handle it instead with better performance.
+
+Last but not least, the TCP listener also needs a corresponding port forwarding configuration. In this case, TCP/8181 on jet.buzzword.marketing needs to be forward to TCP/8181 on the internal host where Devolutions Gateway is running. Don't forget to double check that the firewall has the proper inbound TCP port exception.
 
 ## Wayk Bastion
 
