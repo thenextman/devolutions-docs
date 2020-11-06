@@ -6,6 +6,9 @@ uid: database-management
 
 Aside from the Wayk Bastion configuration files, all Wayk Bastion data is stored inside a [MongoDB database](https://www.mongodb.com). If you do not specify a database, a simple MongoDB container will be launched with a docker volume attached to it. While this is fine for a lot of use cases, using a single MongoDB container instance is not suitable for high availability scenarios.
 
+>[!NOTE]
+> If you need help installing and configuring a MongoDB server, [use this guide instead](xref:mongodb-installation).
+
 ## External Database
 
 To point Wayk Bastion to an existing MongoDB server, you need to configure a database connection string, and set MongoDB as external to avoid launching a MongoDB container instance:

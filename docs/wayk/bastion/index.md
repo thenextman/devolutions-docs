@@ -16,7 +16,7 @@ Make sure you have all software prerequisites then read one of our getting start
 -   [getting started guide (Argo tunnel)](xref:getting-started-argo)
 -   [getting started guide (Azure VM)](xref:getting-started-azure).
 -   [getting started guide (ACME/letsencrypt)](xref:getting-started-acme).
--   [relay deployment guide](xref:gateway-deployment).
+-   [Devolutions Gateway getting started guide](xref:gateway-getting-started).
 -   [IIS deployment guide](xref:iis-deployment).
 
 Once you have been familiarized with Wayk Bastion, come back to this page for more details on specific aspects of the software.
