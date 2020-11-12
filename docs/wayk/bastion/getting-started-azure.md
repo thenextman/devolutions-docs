@@ -69,28 +69,26 @@ Make sure that the docker service is running:
     > Get-Service | Where-Object { $_.Name -Like 'docker' }
     > Start-Service -Name docker
 
-Install the WaykDen module:
+Install the WaykBastion module:
 
-    > Install-Module -Name WaykDen -Force
+    > Install-Module -Name WaykBastion -Force
 
-Import the WaykDen module, create a new directory for Wayk Bastion files and move to it:
+Import the WaykBastion module:
 
-    > Import-Module -Name WaykDen
-    > mkdir ~/den-test
-    > cd ~/den-test
+    > Import-Module -Name WaykBastion
 
 Create a new Wayk Bastion configuration and then import a valid TLS certificate. For testing, I have obtained a free certificate from [letsencrypt](https://letsencrypt.org/) using [Posh-ACME](https://github.com/rmbolger/Posh-ACME) and the [Azure DNS plugin](https://github.com/rmbolger/Posh-ACME/blob/master/Posh-ACME/DnsPlugins/Azure-Readme.md).
 
-    > New-WaykDenConfig -Realm buzzword.marketing -ExternalUrl 'https://den.buzzword.marketing' -ListenerUrl 'https://localhost:443'
+    > New-WaykBastionConfig -Realm buzzword.marketing -ExternalUrl 'https://den.buzzword.marketing' -ListenerUrl 'https://localhost:443'
     > Import-WaykDenCertificate -CertificateFile .\fullchain.pfx -Password 'poshacme'
 
 Alternatively, you can skip the TLS certificate configuration and expose Wayk Bastion in HTTP (never do this in production):
 
-    > New-WaykDenConfig -Realm buzzword.marketing -ExternalUrl 'http://den.buzzword.marketing' -ListenerUrl 'http://localhost:80'
+    > New-WaykBastionConfig -Realm buzzword.marketing -ExternalUrl 'http://den.buzzword.marketing' -ListenerUrl 'http://localhost:80'
 
 Finally, start Wayk Bastion:
 
-    > Start-WaykDen -Verbose
+    > Start-WaykBastion -Verbose
 
 The first launch will pull all docker images based on Windows Server Core, which can take a while because of their large size. Once started, you should be able to open <https://den.buzzword.marketing> in your browser.
 
