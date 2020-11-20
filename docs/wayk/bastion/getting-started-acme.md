@@ -58,15 +58,12 @@ Here is the plan: we will login to the Azure Portal using the Azure PowerShell m
 From the PowerShell prompt, call *Connect-AzAccount*. If you have more than one subscriptions, you should specify which one you wish to connect to, otherwise you will get the default subscription associated with your account:
 
     PS /home/mamoreau> Connect-AzAccount -Subscription 'wayk staging'
-    WARNING: To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code YH7D820XY to authenticate.
 
     Account                  SubscriptionName TenantId                             Environment
     -------                  ---------------- --------                             -----------
     mamoreau@devolutions.net Wayk Staging     cf76f217-2059-4091-bb00-878429f5cc64 AzureCloud
 
-Follow the instructions given by the *Connect-AzAccount* command. Open a browser, login to the Azure Portal, then open the given link and enter the associated code. If successful, you should see the following:
-
-![Azure PowerShell login success](../../images/azure_ps_login_success.png)
+Follow the instructions given by the *Connect-AzAccount* command. 
 
 You can now go back to your PowerShell prompt and do everything that can be done through the Azure Portal, but with PowerShell instead!
 
@@ -74,14 +71,11 @@ Copy and paste the following code snippet to grab the access token and prepare t
 
     $az = Get-AzContext;
 
-    $AccessToken = ($az.TokenCache.ReadItems() | ?{
-            ($_.TenantId -eq $az.Subscription.TenantId) -and
-            ($_.Resource -Like "*management*")
-    } | Select -First 1).AccessToken;
+    $token = Get-AzAccessToken
 
     $AzParams = @{
             AZSubscriptionId=$az.Subscription.Id;
-            AZAccessToken=$AccessToken;
+            AZAccessToken=$token.Token;
     }
 
 Set the $CommonName variable to the domain for which you wish to request a certificate. In our code, we will be requesting a certificate for *test.buzzword.marketing*:
