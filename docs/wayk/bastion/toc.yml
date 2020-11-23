@@ -4,6 +4,8 @@
       href: docker-installation.md
     - name: Migration Guide
       href: migration-guide.md
+    - name: Migration Guide Linux
+      href: migration-guide-linux.md
     - name: MongoDB
       href: mongodb-installation.md
 - name: Getting Started
