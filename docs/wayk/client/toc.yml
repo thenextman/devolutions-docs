@@ -2,3 +2,5 @@
   href: requirements.md
 - name: User Login
   href: user-login.md
+- name: PowerShell Remoting
+  href: psremoting.md
