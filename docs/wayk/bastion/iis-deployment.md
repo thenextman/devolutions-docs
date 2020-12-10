@@ -56,6 +56,16 @@ Alternatively, the same modification can be done at the command line:
 
     %windir%\system32\inetsrv\appcmd.exe set config -section:system.webServer/proxy -preserveHostHeader:true /commit:apphost
 
+Next, set the **useOriginalURLEncoding** setting in the *system.WebServer/rewrite/globalRules* section to *false*:
+
+![IIS use original URL encoding](../../images/iis_use_original_url_encoding.png)
+
+The same modification can also be done at the command line:
+
+    %windir%\system32\inetsrv\appcmd.exe set config -section:system.WebServer/rewrite/globalRules -useOriginalURLEncoding:false /commit:apphost
+
+This change is necessary to obtain an [unmodified UNENCODED_URL variable in URL rewrite rules](https://blogs.iis.net/iisteam/url-rewrite-v2-1).
+
 ## IIS Site Configuration
 
 In IIS manager, right-click "Sites" and select "Add Website.."
@@ -64,7 +74,7 @@ In IIS manager, right-click "Sites" and select "Add Website.."
 
 In the "Add Website" dialog, enter a site name, physical path and host name. Make sure that the host name you choose is the final one you expect to use with https and matches your certificate name.
 
-As for the physical path on disk, it is not going to be used, but IIS requires you to have one. I have created "C:\\inetpub\\denroot", but you can use any path you want.
+As for the physical path on disk, it is not going to be used, but IIS requires you to have one. I have created "C:\\inetpub\\bastion", but you can use any path you want.
 
 Click OK to create the new website, then select it from the list of sites on the left.
 
@@ -82,19 +92,53 @@ While creating the new reverse proxy rule, you will likely be asked to enable pr
 
 ![IIS Enable ARR](../../images/iis_enable_arr.png)
 
+Upon creation of the first reverse proxy rule, you will also be prompted for the destination server. Just enter 'localhost' for now and click OK:
+
+![IIS Add Reverse Proxy Rules](../../images/iis_add_reverse_proxy_rules.png)
+
 You should now see a single rule called "ReverseProxyInboundRule1" in the list. Double-click on it to open the "Edit Inbound Rule" view.
 
 In the "Match URL" section, leave the "(.\*)" default pattern value. Go to the "Conditions" section and then click "Add…" to create a new condition:
 
-![IIS URL Rewrite - Cache URL Condition](../../images/iis_url_rewrite_cache_url.png)
+![IIS URL Rewrite - Unencoded URL Condition](../../images/iis_url_rewrite_unencoded_url_condition.png)
+
+In the *Action* section, select the "Rewrite" action type, and enter "http://localhost:4000/{C:1}" in the Rewrite URL field. Make sure to uncheck "Append query string" as the query string is already containing within '{C:1}' capture group (UNENCODED_URL variable).
 
 The final result should look like this:
 
 ![IIS URL Rewrite - Edit Inbound Rule](../../images/iis_url_rewrite_edit_inbound_rule.png)
 
-With this URL Rewrite inbound rule, we can now properly rewrite https:// and wss:// URLs to localhost http:// and ws:// URLs. This is important, as failing to correctly rewrite the WebSocket URLs will break WebSocket connectivity, which is required.
+This URL rewrite rule will now forward incoming traffic to http://localhost:4000 with proper handling of the URL query parameter encoding. If you host Wayk Bastion on a different host and port, simply change the destination URL.
 
-While obtaining a proper server certificate is outside of the scope of this guide, you still need to import it in IIS before configuring an HTTPS site binding for your site. Locate the "Server Certificates" feature and double-click on it to open it:
+Here is the resulting web.config file containing the URL rewrite rule for reference:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <system.webServer>
+        <rewrite>
+            <rules>
+                <clear />
+                <rule name="ReverseProxyInboundRule1" patternSyntax="ECMAScript" stopProcessing="true">
+                    <match url="(.*)" />
+                    <conditions logicalGrouping="MatchAll" trackAllCaptures="false">
+                        <add input="{UNENCODED_URL}" pattern="/(.*)" />
+                    </conditions>
+                    <action type="Rewrite" url="http://localhost:4000/{C:1}" appendQueryString="false" logRewrittenUrl="true" />
+                </rule>
+            </rules>
+        </rewrite>
+    </system.webServer>
+</configuration>
+```
+
+## IIS Certificate Configuration
+
+While obtaining a proper server certificate is outside of the scope of this guide, you still need to import it in IIS before configuring an HTTPS site binding for your site.
+
+Valid certificates from letsencrypt can be obtained using [win-acme](https://www.win-acme.com/) and following instructions from [this blog post](https://miketabor.com/how-to-install-a-lets-encrypt-ssl-cert-on-microsoft-iis/). Alternatively, we recommend giving [Posh-ACME](https://github.com/rmbolger/Posh-ACME) a try.
+
+To import your certificate, locate the "Server Certificates" feature and double-click on it to open it:
 
 ![IIS Server Certificates](../../images/iis_server_certificates.png)
 
@@ -104,7 +148,7 @@ At the top right, under "Actions", click "Import…".
 
 In the "Import Certificate" dialog, select your certificate in .pfx file, enter the password and then click OK.
 
-You can now create a new HTTPS site binding. Under "Sites", right-click your site (*den.buzzword.marketing* in this case) and then select "Edit Bindings…":
+You can now create a new HTTPS site binding. Under "Sites", right-click your site and then select "Edit Bindings…":
 
 ![IIS Site - Edit Bindings](../../images/iis_site_edit_bindings.png)
 
@@ -114,8 +158,14 @@ In the "Site Bindings" dialog, click "Add…":
 
 Select "https" as the binding type, and enter your IIS site host name. Check "Require Server Name Indication" and "Disable HTTP/2". Click "Select…", then select the server certificate that was previously imported. Click OK to create the new site binding.
 
+Last but not least, click on the "SSL Settings" feature of your site and make sure that "Require SSL" is unchecked, and that "Client certificates" is set to "Ignore":
+
+![IIS HTTPS site binding](../../images/iis_site_ssl_settings.png)
+
+Those SSL settings are sometimes confused with the HTTPS server certificate configuration. If you enable it by mistake, you may see a certificate prompt when loading the website in the browser, as it is meant to enforce client certificate authentication.
+
 That’s it! Your IIS site is now ready. Review your Wayk Bastion configuration ListenerUrl and ExternalUrl parameters to make sure they correspond to your current configuration:
 
-    Set-WaykDenConfig -ListenerUrl 'http://localhost:4000' -ExternalUrl 'https://den.buzzword.marketing'
+    Set-WaykBastionConfig -ListenerUrl 'http://localhost:4000' -ExternalUrl 'https://bastion.now-it.works'
 
 Then start Wayk Bastion, and you should now be able to access it through your IIS site. If it doesn’t work the first time, try running *iisreset* once to force the configuration changes made earlier.
