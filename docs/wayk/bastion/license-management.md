@@ -22,7 +22,7 @@ Your license should now be listed with its details, such as the license type and
 
 ## Assigning a license
 
-Each Wayk Client user needs an assigned license. For instance, if you have a Wayk Client license valid for 10 users, you will need to assign the license to each of them individually. If you have one of the unlimited user licenses (site, country or global), then all users are automatically licensed and no manual license assignment is necessary.
+Each technician needs an assigned Wayk Bastion Client Access License (CAL) in order to use Wayk Client. For instance, if you have a Wayk Bastion CAL valid for 10 users, you will need to assign the license to each of them individually. If you have one of the unlimited license types (site, country or global), then all users are automatically licensed and no manual license assignment is necessary.
 
 From the Wayk Bastion menu, click *Users*, then *All Users*:
 

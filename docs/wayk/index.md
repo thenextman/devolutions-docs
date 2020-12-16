@@ -119,8 +119,8 @@ Wayk Agent is installed on all machines managed by Wayk Bastion. The system serv
 
 ## Wayk Licensing
 
-Wayk Client requires a license to make remote desktop connections to machines managed by Wayk Bastion. Each user is assigned a license individually, such that 10 Wayk Client licenses are needed for 10 technicians. While licenses can be reassigned as needed, they are not considered "floating" or "concurrent" as seen elsewhere.
+Technicians require an assigned Wayk Bastion Client Access License (CAL). Wayk Bastion CALs are assigned to individual users, such that 10 Wayk Bastion CALs are needed for 10 technicians. While Wayk Bastion CALs can be reassigned as needed, they are not considered "floating" or "concurrent" as seen elsewhere.
 
-Wayk Client users automatically unlock all advanced features, including unlimited concurrent sessions. For a large number of technicians, unlimited user licensing is the recommended option. As for Wayk Agent, it does not require a license, regardless of the number of machines.
+A Wayk Bastion CAL unlocks all advanced features for a given user, including unlimited concurrent sessions. For a large number of technicians, unlimited user licensing is the recommended option. As for Wayk Agent, it does not require a license, regardless of the number of machines.
 
 For more information, [please visit our store](https://store.devolutions.net).
