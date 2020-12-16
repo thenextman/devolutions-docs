@@ -4,7 +4,7 @@ uid: user-management
 
 # User Management
 
-Users using Wayk Now client can log in to be authenticated with Wayk Bastion server. The server, by default, will provide a Wayk Bastion ID to any user who wants to connect to it.
+Users using Wayk Client can log in to be authenticated with Wayk Bastion server. The server, by default, will provide a Wayk Bastion ID to any user who wants to connect to it.
 
 To authenticate user, Wayk Bastion can be configured to use a specific user group through LDAP integration. Two options are supported: Active Directory and JumpCloud.
 

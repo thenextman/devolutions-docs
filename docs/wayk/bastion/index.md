@@ -9,7 +9,7 @@ uid: wayk-bastion-index
 >[!WARNING]
 > We are in the process of rebranding Wayk Den to Wayk Bastion, so some of the documentation may be outdated. If you are upgrading from Wayk Den to Wayk Bastion, please follow the steps from the [migration guide](xref:wayk-migration-guide).
 
-WaykBastion-ps is a PowerShell cmdlet for Wayk Bastion, the centralized server for [Devolutions Wayk Now](https://wayk.devolutions.net). For assistance or feature requests, please use the [Wayk forums](https://forum.devolutions.net/#WaykNow) or open a ticket on this github project.
+WaykBastion is a PowerShell module for Wayk Bastion, the centralized server for [Devolutions Wayk](https://wayk.devolutions.net). For assistance or feature requests, please use the [Wayk forums](https://forum.devolutions.net/#WaykNow) or open a ticket on this github project.
 
 Make sure you have all software prerequisites then read one of our getting started guides:
 
@@ -115,9 +115,9 @@ It should also be noted that you can access the Wayk Bastion Web UI locally thro
 
 ### Certificate configuration
 
-To expose Wayk Bastion to the external world, you will need a TLS certificate from a trusted certificate authority such as [Let's Encrypt](https://letsencrypt.org/). Wayk Now will validate certificates in the same way as a browser does for a website.
+To expose Wayk Bastion to the external world, you will need a TLS certificate from a trusted certificate authority such as [Let's Encrypt](https://letsencrypt.org/). Wayk will validate certificates in the same way as a browser does for a website.
 
-If you wish to make your own certificate authority, the Root CA certificate will need to be installed in each machine’s certificate trust store. If the system browser can validate it, Wayk Now should be able to validate it as well, it’s just a lot more work.
+If you wish to make your own certificate authority, the Root CA certificate will need to be installed in each machine’s certificate trust store. If the system browser can validate it, Wayk should be able to validate it as well, it’s just a lot more work.
 
 Before going any further, check the following points:
 
@@ -130,7 +130,7 @@ Before going any further, check the following points:
 3.  The certificate file contains the certificate **chain** excluding
     the Root CA. This means that in most cases, you should have a leaf
     certificate, followed by one or more intermediate certificates. If
-    validation works in a browser but not in Wayk Now, the intermediate
+    validation works in a browser but not in Wayk, the intermediate
     certificate is likely missing.
 
 The PEM format is the simplest to work with, since it is the Base64 representation of the DER-encoded certificate in between "-----BEGIN CERTIFICATE-----" and "-----END CERTIFICATE-----" tags. To add the intermediate certificate to the certificate file, just append it after your leaf certificate in a text editor.
@@ -172,7 +172,7 @@ Instead of using a local user directory for the configuration files, the service
 
     PS > $ConfigPath = Get-WaykBastionPath ConfigPath
     PS > $ConfigPath
-    C:\ProgramData\Devolutions\Wayk Den
+    C:\ProgramData\Devolutions\Wayk Bastion
     PS > New-Item -Path $ConfigPath -Type Directory -Force
 
 The "Get-WaykBastionPath ConfigPath" command returns the recommended directory for the current platform where files should be stored.
@@ -181,12 +181,12 @@ If you already have a directory with your Wayk Bastion configuration files, you 
 
     PS > Set-Location $ConfigPath
     PS > Register-WaykBastionService -ServicePath $ConfigPath
-    "WaykBastion" service has been installed to "C:\ProgramData\Devolutions\Wayk Den"
+    "WaykBastion" service has been installed to "C:\ProgramData\Devolutions\Wayk Bastion"
     PS > Get-Service WaykBastion
 
     Status   Name               DisplayName
     ------   ----               -----------
-    Stopped  WaykBastion            Wayk Den
+    Stopped  WaykBastion            Wayk Bastion
     PS > Start-Service WaykBastion
 
 Wait for the service to start, this can take some time. If you look at the files in the directory, you should see "WaykBastion.exe", which is the service executable, and "WaykBastion.log", the service log file:
