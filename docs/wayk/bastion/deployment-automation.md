@@ -4,23 +4,23 @@ uid: deployment-automation
 
 # Deployment Automation
 
-Once you have a Wayk Bastion server ready, the next step is to find a way to automate the process of installing, registering and configuring Wayk Now on all of the machines you need to manage. This process is important in order to reduce the total number of manual operations that one needs to perform, especially if you have a large number of machines.
+Once you have a Wayk Bastion server ready, the next step is to find a way to automate the process of installing, registering and configuring Wayk Agent on all of the machines you need to manage. This process is important in order to reduce the total number of manual operations that one needs to perform, especially if you have a large number of machines.
 
 ## Installation
 
-Wayk Now should be installed using the .msi installer on Windows, or the .pkg installer on macOS. You cannot use the standalone executable on Windows or the .dmg package on macOS for unattended access, as they are only meant for temporary access. As such, Wayk Now is not an agentless product because you need to install the Wayk Now agent.
+Wayk Agent should be installed using the .msi installer on Windows, or the .pkg installer on macOS. You cannot use the standalone executable on Windows or the .dmg package on macOS for unattended access, as they are only meant for temporary access. As such, Wayk is not an agentless product because you need to install Wayk Agent.
 
 If you already have a tool that can push the installer on your machines and install it this way, you can download the packages from our CDN and do the installation this way.
 
 If you do not have a way of pushing the installer on the remote machines but can get them to execute scripts, such as logon scripts pushed through GPO in a Windows domain, we recommend automating the downloading of the package from our CDN.
 
-The downloading and installing of the Wayk Now package is already automated in our [WaykNow PowerShell cmdlet](https://github.com/devolutions/WaykNow-ps#installuninstall) available on [PSGallery](https://www.powershellgallery.com/packages/WaykNow). This cmdlet is compatible with PowerShell 7 (and Windows PowerShell 5.1) and works on all operating systems (Windows, macOS, Linux).
+The downloading and installing of the Wayk Agent package is already automated in our [WaykAgent PowerShell module available on PSGallery](https://www.powershellgallery.com/packages/WaykAgent). This cmdlet is compatible with PowerShell 7 (and Windows PowerShell 5.1) and works on all operating systems (Windows, macOS, Linux).
 
 If you would rather make your own script to do the same thing without using the cmdlet, simply use the PowerShell code available on GitHub as reference to roll your own.
 
 ## Enrollment
 
-The enrollment token is used to authorize machines to join your Wayk Bastion and automatically register for unattended access. This token is meant to be easily embedded within scripts, such that all you need is to run a command to get Wayk Now to register with a specific Wayk Bastion initially.
+The enrollment token is used to authorize machines to join your Wayk Bastion and automatically register for unattended access. This token is meant to be easily embedded within scripts, such that all you need is to run a command to get Wayk Agent to register with a specific Wayk Bastion initially.
 
 To create a new enrollment token, go in "Servers → Machine Registration", then click the "Generate".
 
@@ -38,11 +38,11 @@ You should now see the enrollment token in the list. For the moment, the only in
 
 ### Enrollment Using Token Id
 
-After installing Wayk Now on a machine, the *wayk-now* command-line becomes available for post-installation automation. To automatically enroll Wayk Now to your private Wayk Bastion, call the *wayk-now enroll* command with the --token-id and --den-url parameters:
+After installing Wayk Agent on a machine, the *wayk-now* command-line becomes available for post-installation automation. To automatically enroll Wayk Agent to your private Wayk Bastion, call the *wayk-now enroll* command with the --token-id and --den-url parameters:
 
     wayk-now enroll --token-id f762156f-9470-4dcc-9ba3-157437e465ce --den-url https://den.contoso.com
 
-If the command is successful, Wayk Now will be configured to point to your Wayk Bastion, and will be automatically registered for unattended access. It should now be visible in the list of registered machines in Wayk Bastion:
+If the command is successful, Wayk Agent will be configured to point to your Wayk Bastion, and will be automatically registered for unattended access. It should now be visible in the list of registered machines in Wayk Bastion:
 
 ![Enrollment Token - Machine](../../images/den_enrollment_machine.png)
 
@@ -50,7 +50,7 @@ If the command is successful, Wayk Now will be configured to point to your Wayk 
 
 While the token id is relatively short and easy to embed into a script, it has one disadvantage: it doesn’t contain information about the Wayk Bastion it belongs to. This is why the *--den-url* parameter is required when using the token id for automated enrollment.
 
-The alternative is to extract and use the full token data, such that the only thing you need is the token. However, the token data is usually much longer and usually needs to be embedded in a file to be passed to Wayk Now.
+The alternative is to extract and use the full token data, such that the only thing you need is the token. However, the token data is usually much longer and usually needs to be embedded in a file to be passed to Wayk Agent.
 
 To extract the enrollment token data, click on the vertical ellipsis (⋮) button besides the enrollment token, and select "View full token":
 
@@ -72,6 +72,6 @@ However, we recommend using a file to pass the enrollment token data whenever po
 
 ## Configuration
 
-Once Wayk Now is installed and registered with Wayk Bastion, you may want to change configuration settings. This can be done through the *wayk-now config* command, [documented here](https://helpwayk.devolutions.net/kb_configcommandline.html).
+Once Wayk Agent is installed and registered with Wayk Bastion, you may want to change configuration settings. This can be done through the *wayk-now config* command.
 
 These commands can be appended to your custom deployment script that installs the package, performs automated enrollment and finishes by modifying the configuration.
