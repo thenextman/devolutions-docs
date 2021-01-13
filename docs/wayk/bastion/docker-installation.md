@@ -90,3 +90,9 @@ We've had one instance where Cisco AMP broke Docker for a customer, and the prob
 ### Other Antivirus Software
 
 If you don't see instructions specific to your antivirus software and run into issues, try disabling it temporarily, and then search for exclusion recommendations from your antivirus vendor. It is hard to test for all antivirus software out there, so we welcome contributions to keep the list up to date.
+
+## Virtual Machine
+
+### VMWare
+
+In one instance, a user had an issue with VMWare tools, speciafically version 11.0.5, that was installed on the server. This was causing the docker images to fail every 30 minutes and restart in an incorrect order, making the Wayk Bastion instance unusable. Version 11.0.6 fixed the issue. If you encounter a simlar issue with a VM running on VMWare, try updating the tools first to see if it fixes the issue.
