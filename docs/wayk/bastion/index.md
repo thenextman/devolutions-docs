@@ -35,7 +35,7 @@ A powershell module is available to configure and manage the Wayk Bastion server
 
 The Wayk Bastion PowerShell module is [available on PSGallery](https://www.powershellgallery.com/packages/WaykBastion).
 
-    Install-Module -Name WaykBastion -AllowPrerelease
+    Install-Module -Name WaykBastion -Scope AllUsers
     Import-Module WaykBastion
 
 If you encounter issues with the `Install-Module` command, you may have to [install or update PowerShellGet](https://docs.microsoft.com/en-us/powershell/scripting/gallery/installing-psget).
@@ -49,6 +49,14 @@ When a new version comes out, you can update the cmdlet and restart Wayk Bastion
     Update-Module -Name WaykBastion
     Import-Module WaykBastion
     Restart-WaykBastion
+
+You can also list all Powershell module versions installed:
+
+    Get-Module WaykBastion -ListAvailable -All
+
+You could see some modules installed in `Program Files` folder and others installed in `Users` folder depending if you used a Powershell prompt with elevated permissions (run as Administrator) or not to install the module. We should always use a prompt with elevated privileges to install or update Wayk Bastion Powershell module to install all versions in `Program Files` folder. If it is not the case, you can uninstall all versions and reinstall with the command above. To uninstall all versions:
+    
+    Uninstall-Module -Name WaykBastion -AllVersion
 
 #### Installation from Source
 
