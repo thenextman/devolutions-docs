@@ -15,7 +15,7 @@ Take control without losing it: Wayk Bastion makes remote access to all machines
 [**Start Trial Now**](https://wayk.devolutions.net/trial)
 
 * Built for Zero-Trust Security, No VPN Required! ✓
-* Multi-tenant deployment with customer isolation ✓
+* Multi-Tenant Deployment with Customer Isolation ✓
 * Remote Machine Management on Separate Networks ✓
 * Unattended Remote Desktop Access for All Platforms ✓
 * Centralized Dashboard with Role-Based Access Control ✓
