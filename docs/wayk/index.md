@@ -15,6 +15,7 @@ Take control without losing it: Wayk Bastion makes remote access to all machines
 [**Start Trial Now**](https://wayk.devolutions.net/trial)
 
 * Built for Zero-Trust Security, No VPN Required! ✓
+* Multi-tenant deployment with customer isolation ✓
 * Remote Machine Management on Separate Networks ✓
 * Unattended Remote Desktop Access for All Platforms ✓
 * Centralized Dashboard with Role-Based Access Control ✓
@@ -90,16 +91,16 @@ Provide remote assistance to end users efficiently with Wayk Client and the righ
 * Session Recording
   * Record remote desktop sessions as video files to be reviewed later.
 
-### Enterprise Ready
+### MSP Ready
 
 Connect without effort to machines on all platforms with the highest level of security.
 
+* Multi-Tenancy
+  * Manage multiple customers within a single multi-tenant deployment that enforces isolation and security.
 * Cross-Platform
   * Manage machines running Windows, macOS and Linux from all platforms, including Android and iOS.
 * Concurrent Sessions
   * Easily manage multiple remote connections simultaneously while quickly navigating between them.
-* Certificate Authority
-  * Secure access with strong TLS 1.2 encryption backed by a built-in certificate authority.
 
 ## Wayk Client
 
