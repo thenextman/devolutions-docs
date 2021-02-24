@@ -75,3 +75,76 @@ However, we recommend using a file to pass the enrollment token data whenever po
 Once Wayk Agent is installed and registered with Wayk Bastion, you may want to change configuration settings. This can be done through the *wayk-now config* command.
 
 These commands can be appended to your custom deployment script that installs the package, performs automated enrollment and finishes by modifying the configuration.
+
+## Deployment
+
+### PowerShell Module
+
+The Wayk Agent can be installed and configured using the `WaykAgent` PowerShell module, making it easy to write a custom script for deployment automation.
+
+```powershell
+Install-Module -Name WaykAgent -Scope AllUsers -Force
+Import-Module -Name WaykAgent
+```
+
+Install Wayk Agent quietly:
+
+```powershell
+Install-WaykAgent -Quiet
+```
+
+Register Wayk Agent with Wayk Bastion:
+
+```powershell
+Register-WaykAgent `
+    -DenUrl "https://bastion.ad.it-help.ninja" `
+    -TokenId "1be20ccc-7714-4bb7-b88a-a8a6a873f653"
+```
+
+You can find additional commands exposed by the `WaykAgent` PowerShell module using the `Get-Command -Module WaykAgent`.
+
+### Custom Executable
+
+The Wayk Agent can be deployed using a one-click custom executable preconfigured to install, configure and register Wayk Agent with Wayk Bastion.
+
+Install the `WaykCustomExecutable` PowerShell module:
+
+```powershell
+Install-Module -Name WaykCustomExecutable -Scope AllUsers
+Import-Module -Name WaykCustomExecutable
+```
+
+Install the [7-zip command-line tool](https://www.7-zip.org/) manually or using chocolatey (`choco install 7zip -y`). Make sure that the '7z' executable can be found in the system PATH:
+
+```powershell
+PS > where.exe 7z
+C:\ProgramData\chocolatey\bin\7z.exe
+```
+
+The custom executable requires the following parameters:
+
+* DenUrl: Wayk Bastion server URL (https)
+* TokenId: Machine registration token id
+
+The `BrandingFile` parameter is optional, but if you used the white-label editor, the resulting branding.zip file can be exported using the "save" button:
+
+![Wayk Export branding file](../../images/wayk_export_branding_file.png)
+
+Choose a directory in which to put all the files, here I used "C:\shared" and made it a network share for easy distribution on the local network. Run the following command to generate your first custom executable:
+
+```powershell
+New-WaykCustomExecutable `
+    -DenUrl "https://bastion.ad.it-help.ninja" `
+    -TokenId "1be20ccc-7714-4bb7-b88a-a8a6a873f653" `
+    -BrandingFile ".\branding.zip" `
+    -DestinationPath "." `
+    -DestinationName "ItHelpAgent" `
+    -Architecture "x64" `
+    -EmbedMsi $true
+```
+
+The custom executable generation process and resulting files should look like this:
+
+![Wayk Custom Executable](../../images/wayk_custom_executable.png)
+
+The new "ItHelpAgent.exe" custom executable is now ready to be deployed to machines for a one-click installation.
