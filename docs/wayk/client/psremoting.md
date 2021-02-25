@@ -39,7 +39,7 @@ Wayk PowerShell remoting in the Wayk Client is supported on Windows, macOS and L
 
 ### Wayk Agent
 
-Wayk PowerShell remoting in the Wayk Agent is currently only supported on Windows, but macOS and Linux support is coming. Again, [PowerShell 7 must be installed on the target machine](https://github.com/PowerShell/PowerShell#get-powershell), as the built-in Windows PowerShell 5.1 cannot be used.
+Wayk PowerShell remoting in the Wayk Agent is supported on Windows, macOS and Linux. Again, [PowerShell 7 must be installed on the target machine](https://github.com/PowerShell/PowerShell#get-powershell), as the built-in Windows PowerShell 5.1 cannot be used.
 
 ## Launching Connection
 
