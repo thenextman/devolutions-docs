@@ -23,6 +23,9 @@
   href: xref:database-management
 - name: User Management
   href: xref:user-management
+  items:
+    - name: Active Directory
+      href: xref:wayk-active-directory
 - name: Deployment Automation
   href: xref:deployment-automation
 - name: IIS Deployment
