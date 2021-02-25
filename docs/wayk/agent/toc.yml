@@ -1,6 +1,10 @@
 - name: Requirements
   href: requirements.md
+- name: Configuration
+  href: configuration.md
 - name: Diagnostics
   href: diagnostics.md
+- name: Enrollment
+  href: enrollment.md
 - name: Known Issues
   href: known-issues.md

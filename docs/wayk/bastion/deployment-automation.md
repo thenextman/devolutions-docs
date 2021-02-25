@@ -8,7 +8,7 @@ Once you have a Wayk Bastion server ready, the next step is to find a way to aut
 
 ## Installation
 
-Wayk Agent should be installed using the .msi installer on Windows, or the .pkg installer on macOS. You cannot use the standalone executable on Windows or the .dmg package on macOS for unattended access, as they are only meant for temporary access. As such, Wayk is not an agentless product because you need to install Wayk Agent.
+Wayk Agent should be installed using the .msi installer on Windows, or the .pkg installer on macOS. You cannot use the standalone executable for unattended access. As such, Wayk is not an agentless product because you need to install Wayk Agent.
 
 If you already have a tool that can push the installer on your machines and install it this way, you can download the packages from our CDN and do the installation this way.
 
@@ -46,6 +46,8 @@ If the command is successful, Wayk Agent will be configured to point to your Way
 
 ![Enrollment Token - Machine](../../images/den_enrollment_machine.png)
 
+It's also possible to pass the enrollment information directly to the Windows .msi at install time. See [Agent Configuration](../agent/configuration.md).
+
 ### Enrollment Using Token Data
 
 While the token id is relatively short and easy to embed into a script, it has one disadvantage: it doesn’t contain information about the Wayk Bastion it belongs to. This is why the *--den-url* parameter is required when using the token id for automated enrollment.
@@ -75,6 +77,8 @@ However, we recommend using a file to pass the enrollment token data whenever po
 Once Wayk Agent is installed and registered with Wayk Bastion, you may want to change configuration settings. This can be done through the *wayk-now config* command.
 
 These commands can be appended to your custom deployment script that installs the package, performs automated enrollment and finishes by modifying the configuration.
+
+See [Agent Configuration](../agent/configuration.md).
 
 ## Deployment
 
