@@ -2,12 +2,12 @@
   items:
     - name: Docker
       href: docker-installation.md
-    - name: Migration Guide
-      href: migration-guide.md
-    - name: Migration Guide Linux
-      href: migration-guide-linux.md
+    - name: PowerShell
+      href: powershell-installation.md
     - name: MongoDB
       href: mongodb-installation.md
+    - name: Migration Guide
+      href: migration-guide.md
 - name: Getting Started
   href: getting-started.md
   items:
