@@ -23,55 +23,50 @@ Once you have been familiarized with Wayk Bastion, come back to this page for mo
 
 ## Installation
 
+### Docker
+
+[Docker Installation](xref:wayk-docker-installation)
+
 ### PowerShell
 
-On Windows, the regular PowerShell already installed can be used. On macOS and Linux, you will need [PowerShell 7](https://github.com/PowerShell/PowerShell#get-powershell). To launch a PowerShell 7 terminal, use the `pwsh` command.
+[PowerShell Installation](xref:wayk-powershell-installation)
 
 #### PowerShell module
 
 A powershell module is available to configure and manage the Wayk Bastion server. It is available on PSGallery or it could be built directly from [source code](https://github.com/Devolutions/WaykBastion-ps). We recommend to install the latest version available on PSGallery, but if needed, a section describe how to build it if you need it.
 
-#### Installation from PSGallery
-
 The Wayk Bastion PowerShell module is [available on PSGallery](https://www.powershellgallery.com/packages/WaykBastion).
 
-    Install-Module -Name WaykBastion -Scope AllUsers
-    Import-Module WaykBastion
-
-If you encounter issues with the `Install-Module` command, you may have to [install or update PowerShellGet](https://docs.microsoft.com/en-us/powershell/scripting/gallery/installing-psget).
+```powershell
+Install-Module -Name WaykBastion -Scope AllUsers
+Import-Module WaykBastion
+```
 
 You can then list all commands exported from the `WaykBastion` module:
 
-    Get-Command -Module WaykBastion
+```powershell
+Get-Command -Module WaykBastion
+```
 
 When a new version comes out, you can update the cmdlet and restart Wayk Bastion to upgrade. The updated cmdlet will point to newer versions of the docker containers used in Wayk Bastion, so upgrading is a simple matter of restarting Wayk Bastion:
 
-    Update-Module -Name WaykBastion
-    Import-Module WaykBastion
-    Restart-WaykBastion
+```powershell
+Update-Module -Name WaykBastion
+Import-Module WaykBastion
+Restart-WaykBastion
+```
 
 You can also list all Powershell module versions installed:
 
-    Get-Module WaykBastion -ListAvailable -All
+```powershell
+Get-Module WaykBastion -ListAvailable -All
+```
 
 You could see some modules installed in `Program Files` folder and others installed in `Users` folder depending if you used a Powershell prompt with elevated permissions (run as Administrator) or not to install the module. We should always use a prompt with elevated privileges to install or update Wayk Bastion Powershell module to install all versions in `Program Files` folder. If it is not the case, you can uninstall all versions and reinstall with the command above. To uninstall all versions:
-    
-    Uninstall-Module -Name WaykBastion -AllVersion
 
-#### Installation from Source
-
-If you have installed the module from PSGallery, this section is not useful for you. You can jump to the next section.
-
-To build the cmdlet, you will need the [.NET SDK](https://dotnet.microsoft.com/download).
-
-From PowerShell, run the build.ps1 script, and then load the resulting PowerShell module:
-
-    .\build.ps1
-    Import-Module "./WaykBastion" -Force
-
-### Docker
-
-[Docker Installation](xref:wayk-docker-installation)
+```powershell
+Uninstall-Module -Name WaykBastion -AllVersion
+```
 
 ## Deployment
 
@@ -105,7 +100,9 @@ The second mandatory parameter is the external URL at which the Wayk Bastion wil
 
 Create a new Wayk Bastion configuration file, using "contoso.net" as realm and "https://den.contoso.net" as the external url:
 
-    PS > New-WaykBastionConfig -Realm contoso.net -ExternalUrl https://den.contoso.net -ListenerUrl http://localhost:4000
+```powershell
+PS > New-WaykBastionConfig -Realm contoso.net -ExternalUrl https://den.contoso.net -ListenerUrl http://localhost:4000
+```
 
 The listener url is used to specify the listening protocol and port on the machine where Wayk Bastion is running. To listen in https, a certificate needs to be imported before changing the listener URL protocol.
 
@@ -129,48 +126,49 @@ If you wish to make your own certificate authority, the Root CA certificate will
 
 Before going any further, check the following points:
 
-1.  The certificate name matches your configured external URL. This
-    means that if your external URL is "https://den.contoso.com" then
-    your certificate name should be "den.contoso.com" or
-    "\*.contoso.com" if you have a wildcard certificate.
-2.  The certificate is either in pem + key or pfx (PKCS\#12) format. The
-    private key password is only supported for the pfx format.
-3.  The certificate file contains the certificate **chain** excluding
-    the Root CA. This means that in most cases, you should have a leaf
-    certificate, followed by one or more intermediate certificates. If
-    validation works in a browser but not in Wayk, the intermediate
-    certificate is likely missing.
+1. The certificate name matches your configured external URL. This means that if your external URL is "https://den.contoso.com" then your certificate name should be "den.contoso.com" or "\*.contoso.com" if you have a wildcard certificate.
+2. The certificate is either in pem + key or pfx (PKCS\#12) format. The private key password is only supported for the pfx format.
+3. The certificate file contains the certificate **chain** excluding the Root CA. This means that in most cases, you should have a leaf certificate, followed by one or more intermediate certificates. If validation works in a browser but not in Wayk, the intermediate certificate is likely missing.
 
 The PEM format is the simplest to work with, since it is the Base64 representation of the DER-encoded certificate in between "-----BEGIN CERTIFICATE-----" and "-----END CERTIFICATE-----" tags. To add the intermediate certificate to the certificate file, just append it after your leaf certificate in a text editor.
 
-    PS > Import-WaykBastionCertificate -CertificateFile /path/to/certificate.pem -PrivateKeyFile /path/to/private_key.key
-
-    PS > Import-WaykBastionCertificate -CertificateFile /path/to/certificate.pfx -Password <password>
+```powershell
+PS > Import-WaykBastionCertificate -CertificateFile /path/to/certificate.pem -PrivateKeyFile /path/to/private_key.key
+PS > Import-WaykBastionCertificate -CertificateFile /path/to/certificate.pfx -Password <password>
+```
 
 ## Running
 
 Start Wayk Bastion, and wait for all containers to start:
 
-    PS > Start-WaykBastion
+```powershell
+Start-WaykBastion
+```
 
 Once started, Wayk Bastion listens on <http://localhost:4000> by default.
 
 Alternatively, if you want to see the complete docker commands executed by the "Start-WaykBastion" command, you can use the *-Verbose* parameter:
 
-    PS > Start-WaykBastion -Verbose
+```powershell
+Start-WaykBastion -Verbose
+```
 
 You can check that all containers are up and running with the `docker ps -f network=den-network` command.
 
 To confirm everything is correctly configured, you should be able to get a response from the Wayk Bastion well known configuration endpoint:
 
-    curl http://localhost:4000/.well-known/configuration
-    {"den_router_uri":"https://den.contoso.net/cow","lucid_uri":"https://den.contoso.net/lucid","realm":"contoso.net","wayk_client_id":"zqdvSbCRWdDrj1fQXwzPQbCg"}
+```powershell
+curl http://localhost:4000/.well-known/configuration
+{"den_router_uri":"https://den.contoso.net/cow","lucid_uri":"https://den.contoso.net/lucid","realm":"contoso.net","wayk_client_id":"zqdvSbCRWdDrj1fQXwzPQbCg"}
+```
 
 If you have correctly configured external access, you should be able to get the same response using the external configuration URL (<https://den.contoso.net/.well-known/configuration>).
 
 Stop Wayk Bastion, and wait for all containers to stop:
 
-    PS > Stop-WaykBastion
+```powershell
+Stop-WaykBastion
+```
 
 ### System Service
 
@@ -178,46 +176,52 @@ It is possible to register a system service on Windows to automatically call Sta
 
 Instead of using a local user directory for the configuration files, the service should be installed in a global directory with restricted permissions like this:
 
-    PS > $ConfigPath = Get-WaykBastionPath ConfigPath
-    PS > $ConfigPath
-    C:\ProgramData\Devolutions\Wayk Bastion
-    PS > New-Item -Path $ConfigPath -Type Directory -Force
+```powershell
+PS > $ConfigPath = Get-WaykBastionPath ConfigPath
+PS > $ConfigPath
+C:\ProgramData\Devolutions\Wayk Bastion
+PS > New-Item -Path $ConfigPath -Type Directory -Force
+```
 
 The "Get-WaykBastionPath ConfigPath" command returns the recommended directory for the current platform where files should be stored.
 
 If you already have a directory with your Wayk Bastion configuration files, you should move them to the new location. You can then proceed with the service registration:
 
-    PS > Set-Location $ConfigPath
-    PS > Register-WaykBastionService -ServicePath $ConfigPath
-    "WaykBastion" service has been installed to "C:\ProgramData\Devolutions\Wayk Bastion"
-    PS > Get-Service WaykBastion
+```powershell
+PS > Set-Location $ConfigPath
+PS > Register-WaykBastionService -ServicePath $ConfigPath
+"WaykBastion" service has been installed to "C:\ProgramData\Devolutions\Wayk Bastion"
+PS > Get-Service WaykBastion
 
-    Status   Name               DisplayName
-    ------   ----               -----------
-    Stopped  WaykBastion            Wayk Bastion
-    PS > Start-Service WaykBastion
+Status   Name               DisplayName
+------   ----               -----------
+Stopped  WaykBastion            Wayk Bastion
+PS > Start-Service WaykBastion
+```
 
 Wait for the service to start, this can take some time. If you look at the files in the directory, you should see "WaykBastion.exe", which is the service executable, and "WaykBastion.log", the service log file:
 
-    PS > Get-ChildItem
+```powershell
+PS > Get-ChildItem
 
+    Directory: C:\ProgramData\Devolutions\Wayk Bastion
 
-        Directory: C:\ProgramData\Devolutions\Wayk Bastion
-
-
-    Mode                LastWriteTime         Length Name
-    ----                -------------         ------ ----
-    d-----         4/2/2020   5:21 PM                den-server
-    d-----         4/2/2020   5:06 PM                traefik
-    -a----         4/7/2020   4:34 PM            314 service.json
-    -a----         4/2/2020   5:06 PM            909 wayk-den.yml
-    -a----         4/2/2020   5:33 PM         770048 WaykBastion.exe
-    -a----         4/7/2020   4:07 PM           2753 WaykBastion.log
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-----         4/2/2020   5:21 PM                den-server
+d-----         4/2/2020   5:06 PM                traefik
+-a----         4/7/2020   4:34 PM            314 service.json
+-a----         4/2/2020   5:06 PM            909 wayk-den.yml
+-a----         4/2/2020   5:33 PM         770048 WaykBastion.exe
+-a----         4/7/2020   4:07 PM           2753 WaykBastion.log
+```
 
 If you encounter issues with Wayk Bastion not working as expected when launched through the system service, the best way to debug the issue is to go in the same directory as the service and run the "Start-WaykBastion" command manually to see what happens.
 
-The system service is a wrapper over the cmdlet. If you need to remove it, you can call the *Unregister-WaykBastionService* function:
+The system service is a wrapper over the cmdlet. If you need to remove it, you can call the `Unregister-WaykBastionService` function:
 
-    PS > Unregister-WaykBastionService -ServicePath $ConfigPath
+```powershell
+Unregister-WaykBastionService -ServicePath $ConfigPath
+```
 
-You can also update the service wrapper executable when never versions of the cmdlet are published by calling Register-WaykBastionService again.
+You can also update the service wrapper executable when never versions of the cmdlet are published by calling `Register-WaykBastionService` again.

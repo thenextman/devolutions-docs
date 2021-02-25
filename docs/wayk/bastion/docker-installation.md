@@ -93,6 +93,6 @@ If you don't see instructions specific to your antivirus software and run into i
 
 ## Virtual Machine
 
-### VMWare
+### VMWare Tools
 
-In one instance, a user had an issue with VMWare tools, speciafically version 11.0.5, that was installed on the server. This was causing the docker images to fail every 30 minutes and restart in an incorrect order, making the Wayk Bastion instance unusable. Version 11.0.6 fixed the issue. If you encounter a simlar issue with a VM running on VMWare, try updating the tools first to see if it fixes the issue.
+The VMware tools versions 11.0.1 to 11.0.5 have a [known issue that causes Docker to shutdown](https://github.com/docker/for-win/issues/5044) at random intervals between 15 and 30 minutes. This issue was resolved in the [VMware tools version 11.0.6](https://docs.vmware.com/en/VMware-Tools/11.0/rn/VMware-Tools-1106-Release-Notes.html), so it is very important to update if you encounter any issues and use VMware. The most common symptom will be a problems showing up in the logs of the MongoDB container after an abnormal restart.
