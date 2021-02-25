@@ -10,5 +10,5 @@ Make sure you have all software prerequisites then read one of our getting start
 
 ## Prerequisites
 
-[Docker](xref:wayk-docker-installation)
-[PowerShell](xref:wayk-powershell-installation)
+ * [Docker](xref:wayk-docker-installation)
+ * [PowerShell](xref:wayk-powershell-installation)
