@@ -12,23 +12,7 @@ In order to fetch user and group information, a user with read-only LDAP access 
 
 ## Active Directory
 
-To integrate Active Directory, here is a list of the required parameters:
-
--   LdapServerUrl: ldap://*ldap-server*
--   LdapUsername, LdapPassword
--   LdapUserGroup
-
-It is important to specify the server IP since there is not DNS resolution in the docker container. The user used should be a user with only read-only access. A section below explains how to create a such user. Finally, the user group is not mandatory. If it is not specified, all users will be accepted. If it is specified, only users from that group will be able to be authenticated.
-
-The following command will set LDAP property value for active directory.
-
-    Set-WaykDenConfig -LdapServerType ActiveDirectory -LdapUsername ldap-user@contoso.local -LdapPassword ldap-password -LdapServerUrl ldap://ldap-server -LdapUserGroup 'Domain Users'
-
-### User creation with read-only access
-
-By default, a new user created in active directory has read-only access on the LDAP server. But that user is also member of the group Domain Users by default. Being member of that group is enough to be able to use that user and log on any domain’s computer. To avoid that, we suggest to use a user who is not a member of Domain Users group and has only read-only access on the LDAP server. To do that, a few steps is needed.
-
-First, a new group has to be created, let’s say "Read-only Users". Then a new user can be created and added only to that group. After that, the new group can be set as primary group for the user. And finally, the user can be removed from the Domain Users group. This user should be used to configured WaykDen Server.
+[Wayk Active Directory Integration](xref:wayk-active-directory)
 
 ## JumpCloud
 
