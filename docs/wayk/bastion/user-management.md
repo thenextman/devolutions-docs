@@ -4,11 +4,7 @@ uid: user-management
 
 # User Management
 
-Users using Wayk Client can log in to be authenticated with Wayk Bastion server. The server, by default, will provide a Wayk Bastion ID to any user who wants to connect to it.
-
-To authenticate user, Wayk Bastion can be configured to use a specific user group through LDAP integration. Two options are supported: Active Directory and JumpCloud.
-
-In order to fetch user and group information, a user with read-only LDAP access must first be created.
+Wayk Bastion can synchronize users from an existing user directory, avoiding the need to create new accounts and passwords for all users. Active Directory and JumpCloud are both supported through LDAP integration.
 
 ## Active Directory
 
@@ -16,17 +12,4 @@ In order to fetch user and group information, a user with read-only LDAP access 
 
 ## JumpCloud
 
-[JumpCloud](https://jumpcloud.com/) is a cloud service who help you to centralize user management. You can create users and groups then use the service call "LDAP-as-a-Service" to access those users and groups from WaykDen. You can read more on [how to use JumpCloud’s LDAP-as-a-Service](https://support.jumpcloud.com/customer/en/portal/articles/2439911-using-jumpcloud-s-ldap-as-a-service).
-
-To integrate Jump Cloud with Wayk Bastion, here is a list of the required parameters:
-
--   LdapServerUrl (ldaps://ldap.jumpcloud.com:636)
--   LdapUsername, LdapPassword
--   LdapBaseDn: Distinguished Name to retrieve users and groups
--   LdapUserGroup (optional)
-
-The LDAP server url should be set to ldaps://ldap.jumpcloud.com:636. JumpCloud provide a non secure access as well, but we don’t recommend it. A user who can read the ldap directory should be created following steps [here](https://support.jumpcloud.com/customer/en/portal/articles/2439911-using-jumpcloud-s-ldap-as-a-service#createuser). The username has to be provided with the Distinguished Name (DN), something like `uid=_LDAP_BINDING_USER_,ou=Users,o=_YOUR_ORG_ID_,dc=jumpcloud,dc=com`. The base DN is similar and should be set to `ou=Users,o=_YOUR_ORG_ID_,dc=jumpcloud,dc=com`. Finally, a user group name can be specified to limit user to that group.
-
-The following command will set LDAP property value for JumpCloud.
-
-    Set-WaykDenConfig -LdapServerType JumpCloud -LdapUsername "uid=ldap-user,ou=Users,o=YOUR_ORG_ID,dc=jumpcloud,dc=com" -LdapPassword ldap-password -LdapServerUrl ldaps://ldap.jumpcloud.com:636 -LdapBaseDn "ou=Users,o=YOUR_ORG_ID,dc=jumpcloud,dc=com -LdapUserGroup wayk-users"
+[Wayk Jumpcloud Directory Integration](xref:wayk-jumpcloud-directory)
