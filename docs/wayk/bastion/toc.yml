@@ -26,6 +26,8 @@
   items:
     - name: Active Directory
       href: xref:wayk-active-directory
+    - name: JumpCloud Directory
+      href: xref:wayk-jumpcloud-directory
 - name: Deployment Automation
   href: xref:deployment-automation
 - name: White-Label Branding
