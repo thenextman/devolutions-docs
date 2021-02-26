@@ -28,5 +28,7 @@
       href: xref:wayk-active-directory
 - name: Deployment Automation
   href: xref:deployment-automation
+- name: White-Label Branding
+  href: white-label-branding.md
 - name: IIS Deployment
   href: xref:iis-deployment
